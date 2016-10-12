@@ -19,7 +19,7 @@ Works with until 4 cols: do we need other cols in a web layout?
     flex-shrink: 0;
 
     @if $cols >= 4 {
-      @media screen and (break(small)) {
+      @media screen and (min-width: 48em) {
         $my-cols: $cols - 2;
         $item-width: calc((100% / #{$my-cols}) - #{$gap * 2});
         max-width: $item-width; // for IE
@@ -28,7 +28,7 @@ Works with until 4 cols: do we need other cols in a web layout?
         margin-right: $gap;
       }
     } @else {
-      @media screen and (break(small)) {
+      @media screen and (min-width: 48em) {
         $my-cols: $cols - 1;
         $item-width: calc((100% / #{$my-cols}) - #{$gap * 2});
         max-width: $item-width;
@@ -40,14 +40,14 @@ Works with until 4 cols: do we need other cols in a web layout?
     }
 
     @if $cols >= 4 {
-      @media screen and (break(medium)) {
+      @media screen and (min-width: 60em) {
         $my-cols: $cols - 1;
         $item-width: calc((100% / #{$my-cols}) - #{$gap * 2});
         flex-basis: $item-width;
         max-width: $item-width;
       }
     } @else {
-        @media screen and (break(medium)) {
+        @media screen and (min-width: 60em) {
           $my-cols: $cols;
           $item-width: calc((100% / #{$my-cols}) - #{$gap * 2});
           flex-basis: $item-width;
@@ -56,7 +56,7 @@ Works with until 4 cols: do we need other cols in a web layout?
     }
 
     @if $cols >= 4 {
-      @media screen and (break(large)) {
+      @media screen and (min-width: 80em) {
         $my-cols: $cols;
         $item-width: calc((100% / #{$my-cols}) - #{$gap * 2});
         flex-basis: $item-width;
