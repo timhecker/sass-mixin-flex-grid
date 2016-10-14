@@ -27,17 +27,25 @@ Works with until 4 cols: do we need other cols in a web layout?
         margin-left: $gap;
         margin-right: $gap;
       }
+    } @else if $cols = 3 {
+        @media screen and (min-width: 48em) {
+          $my-cols: 2;
+          $item-width: calc((100% / #{$my-cols}) - #{$gap * 2});
+          max-width: $item-width;
+          flex-basis: $item-width;
+          margin-left: $gap;
+          margin-right: $gap;
+        }
     } @else {
-      @media screen and (min-width: 48em) {
-        $my-cols: $cols - 1;
-        $item-width: calc((100% / #{$my-cols}) - #{$gap * 2});
-        max-width: $item-width;
-        flex-basis: $item-width;
-        margin-left: $gap;
-        margin-right: $gap;
-
-      }
+        @media screen and (min-width: 48em) {
+          $item-width: calc((100% / #{$cols}) - #{$gap * 2});
+          max-width: $item-width;
+          flex-basis: $item-width;
+          margin-left: $gap;
+          margin-right: $gap;
+        }
     }
+
 
     @if $cols >= 4 {
       @media screen and (min-width: 60em) {
