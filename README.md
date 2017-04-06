@@ -3,6 +3,8 @@ A sass mixin based on [fukol-grids](https://github.com/Heydon/fukol-grids).
 
 Works with over 4 cols, but **4** is already a good number: do we need other cols in a web layout?
 
+Take a look on a **[DEMO](http://codepen.io/timhecker/details/RpmRzm/)**
+
 
 ## SASS
 
