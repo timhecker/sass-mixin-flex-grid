@@ -1,74 +1,102 @@
 # SASS mixin flex grid
 A sass mixin based on [fukol-grids](https://github.com/Heydon/fukol-grids).
 
-Works with until 4 cols: do we need other cols in a web layout?
+Works with over 4 cols, but **4** is already a good number: do we need other cols in a web layout?
 
 
 ## SASS
 
 ```sass
 
-@mixin flex-grid($cols, $gap, $item-name) {
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: (-$gap);
-  margin-right: (-$gap);
+// mixin to calculate item width
+@mixin item-width($width) {
+	max-width: $width; // for IE
+	flex-basis: $width; // for iOS
+}
+
+// mixin for flex grid
+@mixin flex-grid($item-name, $cols: 2, $gap: 0) {
+	
+  // grid works only from small viewport and beyond
+  @media screen and (min-width: 48em) {
+    display: flex;
+    flex-wrap: wrap;
+
+    @if $gap > 0 {
+      overflow: hidden;
+      margin-left: -($gap);
+      margin-right: -($gap);
+    }
+  }
 
   .#{$item-name} {
     width: 100%; // for IE 10
-    flex-grow: 1;
-    flex-shrink: 0;
+		
+		@if $gap > 0 {
+			margin-bottom: $gap * 2; // vertical space between items, relative to horizontal space
+		}
 
     // small viewport
     @media screen and (min-width: 48em) {
-      @if $cols >= 4 {
-        $my-cols: $cols - 2;
-        $item-width: calc((100% / #{$my-cols}) - #{$gap * 2});
-        max-width: $item-width; // for IE
-        flex-basis: $item-width; // for iOS
+      // contextual var
+			$item-width: if($gap > 0, calc(50% - #{$gap * 2}), 50%);
+      // ---------------
+			@include item-width($item-width);
+      flex-grow: 1;
+      flex-shrink: 0;
+      
+      @if $gap > 0 {
         margin-left: $gap;
         margin-right: $gap;
-      }
-      @else if $cols = 3 {
-        $my-cols: 2;
-        $item-width: calc((100% / #{$my-cols}) - #{$gap * 2});
-        max-width: $item-width;
-        flex-basis: $item-width;
-        margin-left: $gap;
-        margin-right: $gap;
-      }
-      @else {
-        $item-width: calc((100% / #{$cols}) - #{$gap * 2});
-        max-width: $item-width;
-        flex-basis: $item-width;
-        margin-left: $gap;
-        margin-right: $gap;
+       }
+    }
+
+    // MORE THAN 2 COLS
+    @if $cols >= 3 {
+      // large viewport
+      @media screen and (min-width: 80em) {
+        // contextual var
+				$item-width: if($gap > 0, calc((100% / #{$cols}) - #{$gap * 2}), (100% / $cols));
+        // ---------------
+     		@include item-width($item-width);
       }
     }
 
-    // medium viewport
-    @media screen and (min-width: 60em) {
-      @if $cols >= 4 {
-        $my-cols: $cols - 1;
-        $item-width: calc((100% / #{$my-cols}) - #{$gap * 2});
-        flex-basis: $item-width;
-        max-width: $item-width;
+    // MORE THAN 3 COLS
+    @if $cols >= 4 {
+      // large viewport
+      @media screen and (min-width: 80em) {
+        // contextual var
+				$item-width: if($gap > 0, calc((100% / 3) - #{$gap * 2}), (100% / 3)); // always 3 cols on large viewport
+        // ---------------
+        @include item-width($item-width);
       }
-      @else {
-        $my-cols: $cols;
-        $item-width: calc((100% / #{$my-cols}) - #{$gap * 2});
-        flex-basis: $item-width;
-        max-width: $item-width;
+      
+      // extra-large viewport
+      @media screen and (min-width: 100em) {
+        // contextual var
+				$item-width: if($gap > 0, calc((100% / #{$cols}) - #{$gap * 2}), (100% / $cols));
+        // ---------------
+        @include item-width($item-width);
       }
     }
 
-    // large viewport
-    @media screen and (min-width: 80em) {
-      @if $cols >= 4 {
-        $my-cols: $cols;
-        $item-width: calc((100% / #{$my-cols}) - #{$gap * 2});
-        flex-basis: $item-width;
-        max-width: $item-width;
+    // MORE THAN 4 COLS
+    @if $cols >= 5 {
+      // large viewport
+      @media screen and (min-width: 80em) {
+        // contextual var
+				$item-width: if($gap > 0, calc((100% / 4) - #{$gap * 2}), (100% / 4)); // always 4 cols on large viewport
+        // ---------------
+        @include item-width($item-width);
+      }
+      
+      // extra-large viewport
+      @media screen and (min-width: 100em) {
+        // contextual var
+				$item-width: if($gap > 0, calc((100% / #{$cols}) - #{$gap * 2}), (100% / $cols));
+        // ---------------
+        @include item-width($item-width);
       }
     }
   }
@@ -77,8 +105,19 @@ Works with until 4 cols: do we need other cols in a web layout?
 
 ### Usage
 
+**without** space between columns:
+
 ```sass
 .my-grid {
-  @include flex-grid(3, 1vw, 'my-grid__item')
+  @include flex-grid(my-grid__item, 3);
+}
+```
+
+
+**with** space between columns:
+
+```sass
+.my-grid {
+  @include flex-grid(my-grid__item, 3, 2vh);
 }
 ```
