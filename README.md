@@ -6,9 +6,9 @@ Works with over 4 cols, but **4** is already a good number: do we need other col
 Take a look on a **[DEMO](http://codepen.io/timhecker/details/RpmRzm/)**
 
 
-## SASS
+## SCSS
 
-```sass
+```scss
 
 
 // ↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧↧
@@ -121,7 +121,7 @@ Take a look on a **[DEMO](http://codepen.io/timhecker/details/RpmRzm/)**
 
 **without** space between columns:
 
-```sass
+```scss
 .my-grid {
   @include flex-grid(3);
 }
@@ -130,7 +130,7 @@ Take a look on a **[DEMO](http://codepen.io/timhecker/details/RpmRzm/)**
 
 **with** space between columns:
 
-```sass
+```scss
 .my-grid {
   @include flex-grid(3, 2vh);
 }
@@ -138,7 +138,7 @@ Take a look on a **[DEMO](http://codepen.io/timhecker/details/RpmRzm/)**
 
 I want my grid only with my precise media query (`@media-query: false`)
 
-```sass
+```scss
 .my-grid {
   
   // vertical space for children
